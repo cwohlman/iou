@@ -91,3 +91,11 @@ As items in the transaction are delivered either user can create a fulfillment m
 Finally when all items are fulfilled each user can "Archive" the transaction to hide it from their active transactions.
 
 
+## Revision 2
+
+
+After thinking about it, I think it will be simpler to just create a Users (many <-> many) Transactions (one <-> many) Actions
+
+
+
+
