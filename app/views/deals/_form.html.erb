@@ -13,8 +13,22 @@
 
 
   <div>
-    <%= form.label :comment, style: "display: block" %>
-    <%= form.text_area :comment %>
+    <%= form.label "Your email", style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+  <div>
+    <%= form.label "Counterparty email", style: "display: block" %>
+    <%= form.text_field :counterparty %>
+  </div>
+
+  <div>
+    <%= form.label "What you owe or gave them", style: "display: block" %>
+    <%= form.text_area :toCounterparty %>
+  </div>
+
+  <div>
+    <%= form.label "What they owe or gave you", style: "display: block" %>
+    <%= form.text_area :fromCounterparty %>
   </div>
 
   <div>

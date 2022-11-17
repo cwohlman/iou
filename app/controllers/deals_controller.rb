@@ -21,23 +21,35 @@ class DealsController < ApplicationController
 
   # POST /deals or /deals.json
   def create
-    @deal = Deal.new(params[:deal].permit!)
+    user = User.find_or_create_by!(email: params[:deal][:email])
+    counterparty = User.find_or_create_by!(email: params[:deal][:counterparty])
+
+
+    @deal = Deal.create!()
+
+    Party.create!({ deal: @deal, user: user })
+    Party.create!({ deal: @deal, user: counterparty })
+
+    items = [
+      { "id" => "todo1", "to" => user["id"], "from": counterparty["id"], "item": params[:deal][:fromCounterparty]},
+      { "id" => "todo2", "to" => counterparty["id"], "from": user["id"], "item": params[:deal][:toCounterparty]},
+    ]
+    action = {
+      "action" => "create",
+      "items" => items,
+    }
+    Action.create!({ deal: @deal, user: user, action: action })
 
     respond_to do |format|
-      if @deal.save
-        format.html { redirect_to deal_url(@deal), notice: "Deal was successfully created." }
-        format.json { render :show, status: :created, location: @deal }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @deal.errors, status: :unprocessable_entity }
-      end
+      format.html { redirect_to deal_url(@deal), notice: "Deal was successfully created." }
+      format.json { render :show, status: :created, location: @deal }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_deal
-      @deal = Deal.find(params[:id])
+      @deal = Deal.find_with_status(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
