@@ -97,5 +97,19 @@ Finally when all items are fulfilled each user can "Archive" the transaction to 
 After thinking about it, I think it will be simpler to just create a Users (many <-> many) Transactions (one <-> many) Actions
 
 
+User:
+- username
+- name
+- email
+- profile
+
+Transaction:
+- users
+- actions
+
+Action:
+- actor
+- timestamp
+- action
 
 
