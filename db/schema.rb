@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_17_192537) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_17_220833) do
   create_table "actions", force: :cascade do |t|
     t.json "action"
     t.integer "user_id", null: false
@@ -44,7 +44,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_17_192537) do
   end
 
   add_foreign_key "actions", "deals"
-  add_foreign_key "actions", "users"
   add_foreign_key "parties", "deals"
-  add_foreign_key "parties", "users"
 end

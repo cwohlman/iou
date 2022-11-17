@@ -8,17 +8,6 @@ class Deal < ApplicationRecord
       deal = Deal.find(id)
       actions = Action.where(deal_id: id)
 
-      # { 
-      #    status: "Proposed" | "Confirmed" | "Rejected",
-      #    items: [{ item: "Bread", status: "Pending" | "Fulfilled" }] 
-      # } or [{
-      #   party: "A",
-      #   ...status,
-      # }, {
-      #   party: "B",
-      #   ...status,
-      # }]
-
       {
         "id" => deal["id"],
         "proposals" => get_proposals(actions),

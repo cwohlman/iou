@@ -2,8 +2,8 @@
 
 one:
   user: one
-  transaction: one
+  deal: one
 
 two:
   user: two
-  transaction: two
+  deal: two
