@@ -1,8 +1,107 @@
-<p style="color: green"><%= notice %></p>
+<div class="bg-white min-h-screen mt-5 pt-5">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+    <div class="mx-auto max-w-3xl">
+      <% if notice %>
+        <div class="rounded-md bg-green-50 p-4 mb-5">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <!-- Heroicon name: mini/check-circle -->
+              <svg class="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
+              </svg>
+            </div>
+            <div class="ml-3">
+              <div class="mt-2 text-sm text-green-700">
+                <p><%= notice %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
 
-<p><%= @deal.id %></p>
-<p><%= @deal.comment %></p>
 
-<div>
-  <%= link_to "Back to deals", deals_path %>
+      <div class="mt-8 rounded-lg shadow-lg bg-gray-50">
+
+        <div class="border-b border-gray-200 bg-white px-4 py-5 sm:px-6">
+          Deal: <%= @deal.comment %>
+        </div>
+        <div class="px-4 py-5 sm:px-6">
+
+          <% case @deal.proposals.count  %>
+            <% when 0  %>
+
+              None
+            <% when 1 %>
+              <% proposal = @deal.proposals[0] %>
+              <div class="mt-8 flex flex-col">
+                <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                    <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                      <table class="min-w-full divide-y divide-gray-300">
+                        <thead class="bg-gray-50">
+                          <tr>
+                            <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Id</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">From</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Item</th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">To</th>
+                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                              <span class="sr-only">Fulfilled</span>
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 bg-white">
+                          <% proposal["items"].each do |item| %>
+                            <tr>
+                              <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= item["id"] %></td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= item["from"] %></td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= item["item"] %></td>
+                              <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= item["to"] %></td>
+                              <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                <%= item["fulfilled"] %>
+                              </td>
+                            </tr>
+                          <% end %>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+                <div class="mt-8 flex flex-col">
+                  <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+                      <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-300">
+                          <thead class="bg-gray-50">
+                            <tr>
+                              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Id</th>
+                              <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Description</th>
+                              <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                                <span class="sr-only">Edit</span>
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody class="divide-y divide-gray-200 bg-white">
+                            <% @deal.proposals.each do |proposal| %>
+                              <tr>
+                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6"><%= proposal["id"] %></td>
+                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">todo</td>
+                                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                                  
+                                </td>
+                              </tr>
+                            <% end %>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
