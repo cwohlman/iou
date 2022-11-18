@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "welcome#index"
 
+  post '/deals/fulfill', to: 'deals#fulfill'
   post '/login', to: 'users#login'
   post '/logout', to: 'users#logout'
 end

@@ -44,9 +44,7 @@
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">From</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Item</th>
                             <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">To</th>
-                            <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                              <span class="sr-only">Fulfilled</span>
-                            </th>
+                            <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Fulfilled</th>
                           </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 bg-white">
@@ -57,7 +55,31 @@
                               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= item["item"] %></td>
                               <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500"><%= get_user_name(item["to"]) %></td>
                               <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                                <%= item["fulfilled"] %>
+                                <% if item["fulfilled"] then %>
+                                  <span class="inline-flex items-center text-green-700 px-2.5 py-0.5">
+                                    <!-- Heroicon name: mini/check -->
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+                                      <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                    </svg>
+                                    Fulfilled!
+                                  </span>
+                                <% else %>
+                                  <%= form_with(model: fulfillable_item(@deal, item), url: { action: "fulfill", controller: "deals" }) do |form| %>
+                                    <%= form.hidden_field :deal_id %>
+                                    <%= form.hidden_field :item_id %>
+                                    <%= form.hidden_field :proposal_id %>
+                                    <%= form.hidden_field :fulfilled %>
+
+                                    <%= button_tag( type: 'submit', :class => "ml-3 relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2") do %>
+                                      <!-- Heroicon name: mini/check -->
+                                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 mr-2">
+                                        <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+                                      </svg>
+                                      <span>Fulfill</span>
+                                    <% end %>
+                                  <% end %>
+                                <% end %>
                               </td>
                             </tr>
                           <% end %>

@@ -32,6 +32,22 @@ class Deal < ApplicationRecord
         proposal = proposals.find { |a| a["id"] == action["action"]["proposal_id"] }
         proposal["rejectedBy"].push(action["user_id"])
         proposal["confirmedBy"] = proposal["confirmedBy"].select { |a| a != action["user_id"] }
+      when "fulfill"
+        logger.info action["action"]["item_id"]
+        proposal = proposals.find { |a| a["id"].to_s  == action["action"]["proposal_id"].to_s }
+
+        if proposal
+          logger.info "hit"
+          logger.info proposal["items"]
+
+          item = proposal["items"].find { |a| a["id"].to_s == action["action"]["item_id"].to_s }
+          item["fulfilled"] = true
+        else
+          logger.info "miss"
+          logger.info proposals
+          logger.info action["action"]["proposal_id"]
+
+        end
       end
     end
 
@@ -51,6 +67,12 @@ class DealWithProposals
   include ActiveModel::Model
 
   attr_accessor :id, :comment, :proposals
+end
+
+class FulfillableItem
+  include ActiveModel::Model
+
+  attr_accessor :deal_id, :item_id, :proposal_id, :fulfilled
 end
 
 
