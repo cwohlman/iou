@@ -57,6 +57,8 @@ class DealsController < ApplicationController
       user.fullname = init.author_name
     end
 
+    set_logged_in_user_id user.id
+
     counterparty = User.find_or_create_by!(email: init.counterparty_email) do |user|
       user.fullname = init.counterparty_name
     end
