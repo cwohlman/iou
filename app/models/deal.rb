@@ -8,7 +8,7 @@ class Deal < ApplicationRecord
       deal = Deal.find(id)
       actions = Action.where(deal_id: id)
 
-      Deal_Expanded.new({
+      DealWithProposals.new({
         "id" => deal["id"],
         "comment" => deal["comment"],
         "proposals" => get_proposals(actions),
@@ -44,8 +44,19 @@ class Party < ActiveRecord::Base
   belongs_to :user
 end
 
-class Deal_Expanded
+
+# Do these belong somewhere else?
+
+class DealWithProposals
   include ActiveModel::Model
 
   attr_accessor :id, :comment, :proposals
 end
+
+
+class DealWithInitialization
+  include ActiveModel::Model
+
+  attr_accessor :author_name, :author_email, :counterparty_name, :counterparty_email, :from_author_item, :to_author_item
+end
+

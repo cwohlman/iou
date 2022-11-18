@@ -38,6 +38,8 @@ class UsersController < ApplicationController
   def login
     @user = User.find_or_create_by(login_params)
 
+    session["user_id"] = @user.id
+
     respond_to do |format|
       if @user
         format.html { redirect_to user_url(@user), notice: "Successfully login." }

@@ -21,18 +21,25 @@ class DealsController < ApplicationController
 
   # POST /deals or /deals.json
   def create
-    user = User.find_or_create_by!(email: params[:deal][:email])
-    counterparty = User.find_or_create_by!(email: params[:deal][:counterparty])
+    init = deal_params
+
+    user = User.find_or_create_by!(email: init.author_email) do |user|
+      user.name = init.author_name
+    end
+
+    counterparty = User.find_or_create_by!(email: init.counterparty_email) do |user|
+      user.name = init.counterparty_name
+    end
 
 
-    @deal = Deal.create!({ comment: params[:deal][:counterparty] + " gives " + params[:deal][:fromCounterparty] + " to " + params[:deal][:email] + " for " + params[:deal][:toCounterparty] })
-
+    @deal = Deal.create!({ comment: init.author_name + " gives " + init.from_author_item + " to " + init.counterparty_name + " for " + init.from_author_item })
+    
     Party.create!({ deal: @deal, user: user })
     Party.create!({ deal: @deal, user: counterparty })
 
     items = [
-      { "id" => "todo1", "to" => user["id"], "from": counterparty["id"], "item": params[:deal][:fromCounterparty]},
-      { "id" => "todo2", "to" => counterparty["id"], "from": user["id"], "item": params[:deal][:toCounterparty]},
+      { "id" => "todo1", "to" => user.id, "from" => counterparty.id, "item" => init.to_author_item, "fulfilled" => false },
+      { "id" => "todo2", "to" => counterparty.id, "from" => user.id, "item" => init.from_author_item, "fulfilled" => true },
     ]
     action = {
       "action" => "create",
@@ -54,6 +61,7 @@ class DealsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def deal_params
-      params.require(:deal).permit(:comment)
+      DealWithInitialization.new(params.require(:deal).permit(:author_name, :author_email, :counterparty_name, :counterparty_email, :from_author_item, :to_author_item))
     end
 end
+

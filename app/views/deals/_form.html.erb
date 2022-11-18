@@ -1,37 +1,37 @@
-<%= form_with(model: deal) do |form| %>
-  <% if deal.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(deal.errors.count, "error") %> prohibited this deal from being saved:</h2>
-
-      <ul>
-        <% deal.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-
+<%= form_for( :deal, url: { action: "create", controller: "deals" }, :html => {:class => 'space-y-6' }) do |form| %>
+  
   <div>
-    <%= form.label "Your email", style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
-  <div>
-    <%= form.label "Counterparty email", style: "display: block" %>
-    <%= form.text_field :counterparty %>
+    <%= form.label :author_name, :class => "sr-only" %>
+    <%= form.text_field :author_name, :placeholder => "Your name", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
   </div>
 
   <div>
-    <%= form.label "What you owe or gave them", style: "display: block" %>
-    <%= form.text_area :toCounterparty %>
+    <%= form.label :author_email, :class => "sr-only" %>
+    <%= form.text_field :author_email, :placeholder => "Your email", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
   </div>
 
   <div>
-    <%= form.label "What they owe or gave you", style: "display: block" %>
-    <%= form.text_area :fromCounterparty %>
+    <%= form.label :from_author_item, :class => "sr-only" %>
+    <%= form.text_field :from_author_item, :placeholder => "What you owe", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.label :counterparty_name, :class => "sr-only" %>
+    <%= form.text_field :counterparty_name, :placeholder => "Your friend's name", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :counterparty_email, :class => "sr-only" %>
+    <%= form.text_field :counterparty_email, :placeholder => "Your friend's email", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
+  </div>
+
+  <div>
+    <%= form.label :to_author_item, :class => "sr-only" %>
+    <%= form.text_field :to_author_item, :placeholder => "What you got/why you owe it", :class => "block w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm" %>
+  </div>
+
+  <div class="flex justify-between flex-row-reverse">
+    <button type="submit" class="flex justify-center rounded-md border border-transparent bg-yellow-300 py-2 px-4 text-sm font-medium text-yellow-800 shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">Create the IOU</button>
+    <button type="submit" class="flex justify-center rounded-md border border-transparent bg-yellow-100 py-2 px-4 text-sm font-medium text-yellow-800 shadow-sm hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2">There's more</button>
   </div>
 <% end %>
