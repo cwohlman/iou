@@ -27,7 +27,7 @@
               <%= form_for( :user, url: { action: "logout", controller: "users" }, :html => {:class => 'flex' }) do |form| %>
               
                 <div class="flex w-full items-center justify-between md:w-auto mr-2">
-                  <a class="text-yellow-900" href="<%- user_url(@current_user) -%>">
+                  <a class="text-yellow-900" href="<%= user_url(@current_user)%>">
                     Hello <strong><%= @current_user.fullname %></strong>
                   </a>
                 </div>

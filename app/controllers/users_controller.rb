@@ -89,6 +89,7 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+      @deals = Party.includes(:deal).where(:user_id => params[:id]).references(:deal)
     end
 
     # Only allow a list of trusted parameters through.
