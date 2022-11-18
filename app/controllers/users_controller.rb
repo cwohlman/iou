@@ -22,6 +22,8 @@ class UsersController < ApplicationController
   # POST /users or /users.json
   def create
     @user = User.new(user_params)
+    
+    set_logged_in_user_id(@user.id)
 
     respond_to do |format|
       if @user.save
@@ -38,7 +40,7 @@ class UsersController < ApplicationController
   def login
     @user = User.find_or_create_by(login_params)
 
-    session["user_id"] = @user.id
+    set_logged_in_user_id(@user.id)
 
     respond_to do |format|
       if @user
