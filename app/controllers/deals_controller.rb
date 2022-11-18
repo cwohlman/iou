@@ -36,14 +36,14 @@ class DealsController < ApplicationController
     end
 
 
-    @deal = Deal.create!({ comment: init.author_name + " gives " + init.from_author_item + " to " + init.counterparty_name + " for " + init.from_author_item })
+    @deal = Deal.create!({ comment: init.author_name + " gives " + init.from_author_item + " to " + init.counterparty_name + " for " + init.to_author_item })
     
     Party.create!({ deal: @deal, user: user })
     Party.create!({ deal: @deal, user: counterparty })
 
     items = [
-      { "id" => "todo1", "to" => user.id, "from" => counterparty.id, "item" => init.to_author_item, "fulfilled" => false },
-      { "id" => "todo2", "to" => counterparty.id, "from" => user.id, "item" => init.from_author_item, "fulfilled" => true },
+      { "id" => "todo1", "to" => user.id, "from" => counterparty.id, "item" => init.to_author_item, "fulfilled" => true },
+      { "id" => "todo2", "to" => counterparty.id, "from" => user.id, "item" => init.from_author_item, "fulfilled" => false },
     ]
     action = {
       "action" => "create",
