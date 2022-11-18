@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   root "welcome#index"
 
   post '/login', to: 'users#login'
+  post '/logout', to: 'users#logout'
 end

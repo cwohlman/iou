@@ -24,11 +24,11 @@ class DealsController < ApplicationController
     init = deal_params
 
     user = User.find_or_create_by!(email: init.author_email) do |user|
-      user.name = init.author_name
+      user.fullname = init.author_name
     end
 
     counterparty = User.find_or_create_by!(email: init.counterparty_email) do |user|
-      user.name = init.counterparty_name
+      user.fullname = init.counterparty_name
     end
 
 

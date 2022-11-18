@@ -18,18 +18,31 @@
           <nav class="relative mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6" aria-label="Global">
             <div class="flex flex-1 items-center">
               <div class="flex w-full items-center justify-between md:w-auto">
-                <a class="text-yellow-900 font-bold text-2xl" href="#">
+                <a class="text-yellow-900 font-bold text-2xl" href="/">
                   I Owe You
                 </a>
               </div>
             </div>
-            <%= form_for( :user, url: { action: "login", controller: "users" }, :html => {:class => 'flex' }) do |form| %>
-            
-              <%= form.label :email, :class => "sr-only" %>
-              <%= form.text_field :email, class: "rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm mr-5", placeholder: "Your email" %>
+            <% if logged_in_user_id %>
+              <%= form_for( :user, url: { action: "logout", controller: "users" }, :html => {:class => 'flex' }) do |form| %>
+              
+                <div class="flex w-full items-center justify-between md:w-auto mr-2">
+                  <a class="text-yellow-900" href="<%- user_url(@current_user) -%>">
+                    Hello <strong><%= @current_user.fullname %></strong>
+                  </a>
+                </div>
+                <button type="submit" href="#" class="inline-flex items-center rounded-md border border-transparent bg-yellow-300 px-4 py-2 text-sm font-medium text-yellow-900 hover:bg-yellow-400 " >Log out</button>
+              
+              <% end %>
+            <% else %>
+              <%= form_for( :user, url: { action: "login", controller: "users" }, :html => {:class => 'flex' }) do |form| %>
+              
+                <%= form.label :email, :class => "sr-only" %>
+                <%= form.text_field :email, class: "rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 sm:text-sm mr-5", placeholder: "Your email" %>
 
-              <a href="#" class="inline-flex items-center rounded-md border border-transparent bg-yellow-300 px-4 py-2 text-sm font-medium text-yellow-900 hover:bg-yellow-400 ">Log in</a>
-            
+                <button type="submit" href="#" class="inline-flex items-center rounded-md border border-transparent bg-yellow-300 px-4 py-2 text-sm font-medium text-yellow-900 hover:bg-yellow-400 ">Log in</button>
+              
+              <% end %>
             <% end %>
           </nav>
 

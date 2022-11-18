@@ -36,7 +36,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users or /users.json
+  # POST /login
   def login
     @user = User.find_or_create_by(login_params)
 
@@ -50,6 +50,15 @@ class UsersController < ApplicationController
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # GET /logout
+  def logout
+    set_logged_in_user_id(nil)
+
+    respond_to do |format|
+      format.html { redirect_to "/", notice: "Successfully logout." }
     end
   end
 
