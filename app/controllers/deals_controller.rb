@@ -25,7 +25,7 @@ class DealsController < ApplicationController
     counterparty = User.find_or_create_by!(email: params[:deal][:counterparty])
 
 
-    @deal = Deal.create!()
+    @deal = Deal.create!({ comment: params[:deal][:counterparty] + " gives " + params[:deal][:fromCounterparty] + " to " + params[:deal][:email] + " for " + params[:deal][:toCounterparty] })
 
     Party.create!({ deal: @deal, user: user })
     Party.create!({ deal: @deal, user: counterparty })

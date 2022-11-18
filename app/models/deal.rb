@@ -8,10 +8,11 @@ class Deal < ApplicationRecord
       deal = Deal.find(id)
       actions = Action.where(deal_id: id)
 
-      {
+      Deal_Expanded.new({
         "id" => deal["id"],
+        "comment" => deal["comment"],
         "proposals" => get_proposals(actions),
-      }
+      })
   end
 
   def self.get_proposals(actions)
@@ -41,4 +42,10 @@ end
 class Party < ActiveRecord::Base
   belongs_to :deal
   belongs_to :user
+end
+
+class Deal_Expanded
+  include ActiveModel::Model
+
+  attr_accessor :id, :comment, :proposals
 end

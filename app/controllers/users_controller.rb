@@ -34,6 +34,21 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /users or /users.json
+  def login
+    @user = User.find_or_create_by(login_params)
+
+    respond_to do |format|
+      if @user
+        format.html { redirect_to user_url(@user), notice: "Successfully login." }
+        format.json { render :show, status: :created, location: @user }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # PATCH/PUT /users/1 or /users/1.json
   def update
     respond_to do |format|
@@ -66,5 +81,10 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:username, :fullname, :email, :profile)
+    end
+
+    # Only allow a list of trusted parameters through.
+    def login_params
+      params.require(:user).permit(:email)
     end
 end
