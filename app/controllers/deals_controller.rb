@@ -12,7 +12,11 @@ class DealsController < ApplicationController
 
   # GET /deals/new
   def new
-    @deal = DealWithInitialization.new
+    if (@current_user)
+      @deal = DealWithInitialization.new( :author_name => @current_user.fullname, :author_email => @current_user.email )
+    else
+      @deal = DealWithInitialization.new
+    end
   end
 
   # GET /deals/1/edit
