@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 	end
 	def set_logged_in_user_id(id)
 		session["user_id"] = id
+		set_current_user
 	end
 
 	helper_method :logged_in_user_id
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
 	private
 		def set_current_user
 			if logged_in_user_id
-				@current_user = User.find(logged_in_user_id)
+				@current_user = User.find_by(:id => logged_in_user_id)
 			else
 				@current_user = nil
 			end

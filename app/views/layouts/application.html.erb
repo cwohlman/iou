@@ -23,7 +23,7 @@
                 </a>
               </div>
             </div>
-            <% if logged_in_user_id %>
+            <% if @current_user %>
               <%= form_for( :user, url: { action: "logout", controller: "users" }, :html => {:class => 'flex' }) do |form| %>
               
                 <div class="flex w-full items-center justify-between md:w-auto mr-2">

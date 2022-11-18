@@ -12,7 +12,7 @@ class DealsController < ApplicationController
 
   # GET /deals/new
   def new
-    @deal = Deal.new
+    @deal = DealWithInitialization.new
   end
 
   # GET /deals/1/edit
