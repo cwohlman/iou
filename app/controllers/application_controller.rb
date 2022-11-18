@@ -8,8 +8,11 @@ class ApplicationController < ActionController::Base
 		session["user_id"] = id
 		set_current_user
 	end
+	def get_user_name(id)
+		User.find_by(:id => id)&.fullname || "Missing user: #{id}"
+	end
 
-	helper_method :logged_in_user_id
+	helper_method :logged_in_user_id, :get_user_name
 
 	private
 		def set_current_user
